@@ -3,12 +3,6 @@ import React from 'react'
 import './styles.css'
 
 class Calculator extends React.Component {
-
-  update(){
-    this.setState({
-      digit: this.state.didgit
-    })
-  }
   render() {
     return (
       <div className="calculator">
