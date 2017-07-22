@@ -1,70 +1,50 @@
-import React, { Component } from 'react';
-import './App.css';
-import '../node_modules/bootstrap/dist/css/bootstrap.css'
+import React from 'react'
+//import ReactDOM from 'react-dom'
+import './styles.css'
 
-class App extends Component {
-  render() {
-    return (
-     
-      
-      <Button className="btn btn-success"> 
+class Calculator extends React.Component {
 
-        <button value="1">1</button>
-        <button value="2">2</button>
-        <button value="3">3</button>
-        <button value="4">4</button>
-        <button value="5">5</button>
-        
-      </Button>
-      
-    )
-  }
-  
-}
-
-class Button extends React.Component {
-
-  constructor() {
-    super();
-
-    this.state = {
-      selected: '',
-      selected2: ''
-     }
-  }
-
-  //   selecitem2 (selected2) {  
-  //   this.setState({selected2})
- 
-  // }
-
-  update(e){
+  update(){
     this.setState({
-    a: e.target.value,
-    b: e.target.value 
+      digit: this.state.didgit
     })
   }
-
   render() {
-
-    // let fn = child =>
-    //   React.cloneElement(child, { 
-    //     onClick: this.update.bind(this, child.props.value)
-    //   })
-
-    let items = React.Children.map(this.props.children)
-     return (
-       <div>
-         <input type="text"  ref="a" onChange={this.update.bind(this)}/>
-         {this.state.a}
-          <br/>
-
-          <input type="text" ref="b" onChange= {this.update.bind(this)}/>{this.state.b} <br/>
-
-         
-       </div>
-     )
+    return (
+      <div className="calculator">
+        <div className="calculator-display">0</div>
+        <div className="calculator-keypad">
+          <div className="input-keys">
+            <div className="function-keys">
+              <button className="calculator-key key-clear">AC</button>
+              <button className="calculator-key key-sign">±</button>
+              <button className="calculator-key key-percent">%</button>
+            </div>
+            <div className="digit-keys">
+              <button className="calculator-key key-0">0</button>
+              <button className="calculator-key key-dot">●</button>
+              <button className="calculator-key key-1">1</button>
+              <button className="calculator-key key-2">2</button>
+              <button className="calculator-key key-3">3</button>
+              <button className="calculator-key key-4">4</button>
+              <button className="calculator-key key-5">5</button>
+              <button className="calculator-key key-6">6</button>
+              <button className="calculator-key key-7">7</button>
+              <button className="calculator-key key-8">8</button>
+              <button className="calculator-key key-9">9</button>
+            </div>
+          </div>
+          <div className="operator-keys">
+            <button className="calculator-key key-divide">÷</button>
+            <button className="calculator-key key-multiply">×</button>
+            <button className="calculator-key key-subtract">−</button>
+            <button className="calculator-key key-add">+</button>
+            <button className="calculator-key key-equals">=</button>
+          </div>
+        </div>
+      </div>
+    )
   }
 }
 
-export default App;
+export default Calculator;
