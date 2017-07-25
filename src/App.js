@@ -1,100 +1,134 @@
 import React from 'react'
-//import ReactDOM from 'react-dom'
 import './styles.css'
+
+class AutoShrinkText extends React.Component {
+  state = {
+    scale: 1
+  }
+  componentDidUpdate(){
+    const node = this.node
+    const{offsetWidth} = node
+    const parentWidth = node.offsetParent.offsetWidth
+    if(scale > 1){
+      this.setState({
+        scale:1 / scale
+      })
+    } else {
+      this.setState({
+        scale:1
+      })
+    }
+  }
+
+  render(){
+    const {scale}= this.state
+    return <div {...this.props}
+    style={{transform: `scale(${scale},${scale})`}}
+     ref={node => this.node = node}/>
+  }
+}
 
 class Calculator extends React.Component {
 
-  constructor() {
-    super();
+        constructor() {
+            super();
 
-    this.state = {
-      preVal: 0,
-      display: 0,
-      waitingforOperand: false
-      
-    }
+            this.state = {
+                value: null,
+                display: 0,
+                waitingforOperand: false,
+                operator: null
+            }
+        }
 
-  }
+        inputValue(digit) {
+            const {
+                display,
+                waitingforOperand
+            } = this.state
 
-  inputValue(digit) {
-    const { display, waitingforOperand, preVal
-     } = this.state
-    
-    if (waitingforOperand === true) {
+            if (waitingforOperand === true) {
 
-     
-      this.setState({
-        preVal: display,
-        display: String(digit),
-        waitingforOperand: false
-      })
-      console.log(preVal)
-    }
-    else {
 
-      this.setState({
-        display: String(display + digit)
-      })
-    }
-  }
+                this.setState({
+                    display: String(digit),
+                    waitingforOperand: false
+                })
 
-  clearValue() {
+            } else {
 
-    this.setState({
-      display: 0,
-  
-    })
-  }
+                this.setState({
+                    display: String(display + digit)
+                })
+            }
+        }
 
-  dotValue() {
-    const { display } = this.state
-    if (display.indexOf(".") === -1) {
-      this.setState({
-        display: display + "."
-      })
-    }
+        clearValue() {
 
-    else {
-      this.setState({
-        display: display
-      })
-    }
+            this.setState({
+                display: 0,
 
-  }
+            })
+        }
 
-  operatorValue(operator) {
+        dotValue() {
+            const {
+                display
+            } = this.state
+            if (display.indexOf(".") === -1) {
+                this.setState({
+                    display: display + "."
+                })
+            } else {
+                this.setState({
+                    display: display
+                })
+            }
 
-  
+        }
 
-    
-        if (operator === "=") {
-          
-       this.setState({
-          equals : Number(this.state.display) +  Number(this.state.display)
-       })
-     
-    }
-    
-      // this.setState({
-        
+        operatorValue(nextOperator) {
+            const {
+                display,
+                operator,
+                value
+            } = this.state
+            const nextValue = parseFloat(display)
 
-      // })
-    
-     this.setState({
+            const operations = {
+                "/": (preValue, nextValue) => preValue / nextValue,
+                "*": (preValue, nextValue) => preValue * nextValue,
+                "+": (preValue, nextValue) => preValue + nextValue,
+                "-": (preValue, nextValue) => preValue - nextValue,
+                "=": (preValue, nextValue) => nextValue
+            }
 
-      waitingforOperand: true,
-      operator: operator
-    })
-  
+            if (value == null){
+              this.setState({
+                value: nextValue
+              })
+            } else if (operator){
+              const currentValue = value || 0
+              const computedValue = operations[operator](currentValue, nextValue)
 
-  }
+              this.setState({
+                value: computedValue,
+                display: String(computedValue)
+              })
+            }
+
+            this.setState({
+                waitingforOperand: true,
+                operator: nextOperator
+            })
+        }
 
   render() {
     const { display } = this.state
     return (
 
       <div className="calculator">
-        <div className="calculator-display">{display}</div>
+        <AutoShrinkText className="calculator-display"> {display} </AutoShrinkText>
         <div className="calculator-keypad">
           <div className="input-keys">
             <div className="function-keys">
