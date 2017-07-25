@@ -1,32 +1,32 @@
 import React from 'react'
 import './styles.css'
 
-class AutoShrinkText extends React.Component {
-  state = {
-    scale: 1
-  }
-  componentDidUpdate(){
-    const node = this.node
-    const{offsetWidth} = node
-    const parentWidth = node.offsetParent.offsetWidth
-    if(scale > 1){
-      this.setState({
-        scale:1 / scale
-      })
-    } else {
-      this.setState({
-        scale:1
-      })
-    }
-  }
+// class AutoShrinkText extends React.Component {
+//   state = {
+//     scale: 1
+//   }
+//   componentDidUpdate(){
+//     const node = this.node
+//     const{offsetWidth} = node
+//     const parentWidth = node.offsetParent.offsetWidth
+//     if(scale > 1){
+//       this.setState({
+//         scale:1 / scale
+//       })
+//     } else {
+//       this.setState({
+//         scale:1
+//       })
+//     }
+//   }
 
-  render(){
-    const {scale}= this.state
-    return <div {...this.props}
-    style={{transform: `scale(${scale},${scale})`}}
-     ref={node => this.node = node}/>
-  }
-}
+//   render(){
+
+//     return <div {...this.props}
+//     style={{transform: `scale(${scale},${scale})`}}
+//      ref={node => this.node = node}/>
+//   }
+// }
 
 class Calculator extends React.Component {
 
@@ -124,11 +124,11 @@ class Calculator extends React.Component {
         }
 
   render() {
-    const { display } = this.state
+    // const { display } = this.state
     return (
 
       <div className="calculator">
-        <AutoShrinkText className="calculator-display"> {display} </AutoShrinkText>
+        {/* <AutoShrinkText className="calculator-display"> {display} </AutoShrinkText> */}
         <div className="calculator-keypad">
           <div className="input-keys">
             <div className="function-keys">
